@@ -1,9 +1,16 @@
 package bank;
 
+import java.nio.charset.Charset;
+
 /**
  * Contains the common global variables needed by the BankCo client and server.
  */
 public interface BankCo {
+    /**
+     * The UTF-16 character set, used to encode and decode non-ASCII characters.
+     */
+    public static final Charset UTF_16 = Charset.forName("UTF-16");
+
     /**
      * The shift used to encrypt/decrypt text sent to the main bank API.
      */
