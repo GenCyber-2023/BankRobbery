@@ -3,7 +3,6 @@ package bank.client;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
-import java.util.logging.Level;
 
 import bank.BankCo;
 import static bank.CaesarCipher.encrypt;
