@@ -14,6 +14,11 @@ public class BankComponent {
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
+     * The shift used to encrypt/decrypt text sent to the main bank API.
+     */
+    protected static final int BANK_SHIFT = 7;
+
+    /**
      * Port used by clients to connect to the bank to conduct transactions.
      */
     public static final int BANK_PORT = 10241;

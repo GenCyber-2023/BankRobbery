@@ -9,7 +9,6 @@ import bank.BankComponent;
 
 public class BankServer extends BankComponent implements Runnable {
     
-
     private final ServerSocket server;
 
     public BankServer() throws IOException {

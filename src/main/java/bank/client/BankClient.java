@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 
 import bank.BankComponent;
+import static bank.CaesarCipher.encrypt;
+import static bank.CaesarCipher.decrypt;
 import bank.Duplexer;
 
 /**
@@ -37,9 +39,13 @@ public class BankClient extends Duplexer implements Runnable {
                 sentinel = false;
             } else {
                 try {
-                    send(request);
+                    String ciphertext = encrypt(request, 
+                        BANK_SHIFT);
+                    send(ciphertext);
                     String response = read();
-                    System.out.println(response);
+                    String plaintext = decrypt(response, 
+                        BANK_SHIFT);
+                    System.out.println(plaintext);
                 } catch(IOException ioe) {
                     log(Level.SEVERE, "Unexpected error: " + ioe.getMessage() 
                         + "The connection will be closed.");
