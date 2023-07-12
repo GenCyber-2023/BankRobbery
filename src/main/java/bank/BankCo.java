@@ -42,7 +42,7 @@ public interface BankCo {
     /**
      * Response to a quit request.
      */
-    public static final String GOOD_BYE = "goodbye";
+    public static final String GOODBYE = "goodbye";
 
     /**
      * Response to an unrecognized command.
