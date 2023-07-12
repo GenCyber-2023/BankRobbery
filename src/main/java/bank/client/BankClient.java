@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
 
-import bank.Bank;
+import bank.BankComponent;
 import bank.Duplexer;
 
 /**
@@ -15,7 +15,7 @@ public class BankClient extends Duplexer implements Runnable {
     private static final String QUIT = "QUIT";
 
     public BankClient(String host) throws IOException {
-        this(new Socket(host, Bank.BANK_PORT));
+        this(new Socket(host, BankComponent.BANK_PORT));
     }
 
     public BankClient(Socket socket) throws IOException {
@@ -61,8 +61,8 @@ public class BankClient extends Duplexer implements Runnable {
             Thread thread = new Thread(client);
             thread.start();
         } catch(IOException ioe) {
-            Bank.log(Level.SEVERE, "Could not establish a connection to " 
-                + host + ":" + Bank.BANK_PORT)   ;
+            System.err.println("Could not establish a connection to " 
+                + host + ":" + BankComponent.BANK_PORT);
         }
     }
 }

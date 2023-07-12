@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.net.Socket;
 
-public class Duplexer implements AutoCloseable {
-    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+public class Duplexer extends BankComponent implements AutoCloseable {
     private final Socket socket;
     private final PrintWriter writer;
     private final BufferedReader reader;
@@ -20,35 +17,38 @@ public class Duplexer implements AutoCloseable {
     public Duplexer(Socket socket) throws IOException {
         this.socket = socket;
         this.writer = new PrintWriter(socket.getOutputStream());
-        this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.reader = new BufferedReader(
+            new InputStreamReader(socket.getInputStream()));
 
-        this.string = "(" + socket.getLocalAddress() + ":" + socket.getLocalPort() 
-            + ") <-> (" + socket.getInetAddress() + ":" + socket.getPort() + ")";
+        this.string = "(" + socket.getLocalAddress() + ":" 
+            + socket.getLocalPort() + ") <-> (" + socket.getInetAddress() 
+            + ":" + socket.getPort() + ")";
 
-        log(Level.INFO, "Created");
+        logMessage("Created");
     }
 
     public void send(String message) {
-        log(Level.INFO, "SENDING: " + message);
+        logMessage(Level.INFO, "SENDING: " + message);
         writer.println(message);
         writer.flush();
     }
 
     public String read() throws IOException {
         String message = reader.readLine();
-        log(Level.INFO, "RECEIVED: " + message);
+        logMessage("RECEIVED: " + message);
         return message;
     }
 
     @Override
     public void close() {
-        LOGGER.info("CLOSING");
+        logMessage("CLOSING");
         try {
             socket.close();
             writer.close();
             reader.close();
         } catch(IOException ioe) {
-            log(Level.WARNING, "Error closing socket: " + ioe.getMessage());
+            logMessage(Level.WARNING, "Error closing socket: " 
+                + ioe.getMessage());
         }
     }
 
@@ -57,7 +57,11 @@ public class Duplexer implements AutoCloseable {
         return string;
     }
 
-    protected void log(Level level, String message) {
-        Bank.log(level, this + ": " + message);
+    protected void logMessage(String message) {
+        logMessage(Level.INFO, message);
+    }
+
+    protected void logMessage(Level level, String message) {
+        log(level, this + ": " + message);
     }
 }

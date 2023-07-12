@@ -3,9 +3,18 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
 
-public class BankServer implements Runnable {
+import bank.BankComponent;
+
+public class BankServer extends BankComponent implements Runnable {
+    
+
     private final ServerSocket server;
+
+    public BankServer() throws IOException {
+        this(new ServerSocket(BANK_PORT));
+    }
 
     public BankServer(ServerSocket server) {
         this.server = server;
@@ -15,18 +24,27 @@ public class BankServer implements Runnable {
     public void run() {
         while(true) {
             try {
+                log("Waiting for next client...");
                 Socket client = server.accept();
-                BankClientHandler handler = new BankClientHandler(client);
+                log("Client connected; spinning up handler: " 
+                    + client.getInetAddress());
+                HandlerThread handler = new BankClientHandler(client);
                 Thread thread = new Thread(handler);
                 thread.start();
             } catch (IOException e) {
-                // squash?
+                log(Level.WARNING, "An error occurred: " + e.getMessage());
             }
         }
     }
 
     public static void main(String[] args) {
-        // foo
+        try {
+            BankServer server = new BankServer();
+            Thread thread = new Thread(server);
+            thread.start();
+        } catch(IOException ioe) {
+            LOGGER.severe("Failed to start server: " + ioe.getMessage());
+        }
     }
     
 }
