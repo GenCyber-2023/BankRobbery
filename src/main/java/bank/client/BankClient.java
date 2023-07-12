@@ -8,6 +8,9 @@ import java.util.logging.Level;
 import bank.Bank;
 import bank.Duplexer;
 
+/**
+ * Command line interface that will transmit encrypted messages to a server.
+ */
 public class BankClient extends Duplexer implements Runnable {
     private static final String QUIT = "QUIT";
 
