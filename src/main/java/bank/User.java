@@ -2,6 +2,8 @@ package bank;
 
 import static bank.CaesarCipher.encrypt;
 
+import bank.bankco.BankCo;
+
 /**
  * Represents a bank user.
  */

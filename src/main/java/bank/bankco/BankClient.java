@@ -1,10 +1,9 @@
-package bank.client;
+package bank.bankco;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-import bank.BankCo;
 import static bank.CaesarCipher.encrypt;
 import static bank.CaesarCipher.decrypt;
 import bank.Duplexer;

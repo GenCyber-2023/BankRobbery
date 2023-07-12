@@ -1,9 +1,7 @@
-package bank.server;
+package bank;
 
 import java.io.IOException;
 import java.net.Socket;
-
-import bank.Duplexer;
 
 public abstract class HandlerThread extends Duplexer implements Runnable {
     protected HandlerThread(Socket socket) throws IOException {

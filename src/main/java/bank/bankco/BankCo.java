@@ -1,4 +1,4 @@
-package bank;
+package bank.bankco;
 
 import java.nio.charset.Charset;
 
