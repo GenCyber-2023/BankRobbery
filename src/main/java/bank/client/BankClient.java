@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
 
-import bank.BankComponent;
+import bank.BankCo;
 import static bank.CaesarCipher.encrypt;
 import static bank.CaesarCipher.decrypt;
 import bank.Duplexer;
@@ -13,11 +13,11 @@ import bank.Duplexer;
 /**
  * Command line interface that will transmit encrypted messages to a server.
  */
-public class BankClient extends Duplexer implements Runnable {
+public class BankClient extends Duplexer implements BankCo, Runnable {
     private static final String QUIT = "QUIT";
 
     public BankClient(String host) throws IOException {
-        this(new Socket(host, BankComponent.BANK_PORT));
+        this(new Socket(host, BANK_PORT));
     }
 
     public BankClient(Socket socket) throws IOException {
@@ -47,7 +47,8 @@ public class BankClient extends Duplexer implements Runnable {
                         BANK_SHIFT);
                     System.out.println(plaintext);
                 } catch(IOException ioe) {
-                    log(Level.SEVERE, "Unexpected error: " + ioe.getMessage() 
+                    LOGGER.log(Level.SEVERE, "Unexpected error: " 
+                        + ioe.getMessage() 
                         + "The connection will be closed.");
                     sentinel = false;
                 }
@@ -57,7 +58,7 @@ public class BankClient extends Duplexer implements Runnable {
         scanner.close();
         close();
 
-        log(Level.INFO, "Goodbye!");
+        LOGGER.log(Level.INFO, "Goodbye!");
     }
 
     public static void main(String[] args) {
@@ -68,7 +69,7 @@ public class BankClient extends Duplexer implements Runnable {
             thread.start();
         } catch(IOException ioe) {
             System.err.println("Could not establish a connection to " 
-                + host + ":" + BankComponent.BANK_PORT);
+                + host + ":" + BANK_PORT);
         }
     }
 }

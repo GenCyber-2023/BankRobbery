@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.net.Socket;
 
-public class Duplexer extends BankComponent implements AutoCloseable {
+public class Duplexer implements AutoCloseable {
+    protected static final Logger LOGGER = 
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     private final Socket socket;
     private final PrintWriter writer;
     private final BufferedReader reader;
@@ -57,11 +61,11 @@ public class Duplexer extends BankComponent implements AutoCloseable {
         return string;
     }
 
-    protected void logMessage(String message) {
+    private void logMessage(String message) {
         logMessage(Level.INFO, message);
     }
 
-    protected void logMessage(Level level, String message) {
-        log(level, this + ": " + message);
+    private void logMessage(Level level, String message) {
+        LOGGER.log(level, this + ": " + message);
     }
 }

@@ -3,10 +3,12 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 
+import bank.BankCo;
+
 import static bank.CaesarCipher.decrypt;
 import static bank.CaesarCipher.encrypt;
 
-public class BankClientHandler extends HandlerThread {
+public class BankClientHandler extends HandlerThread implements BankCo {
 
     protected BankClientHandler(Socket socket) throws IOException {
         super(socket);

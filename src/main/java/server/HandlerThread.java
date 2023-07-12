@@ -3,10 +3,13 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import bank.Duplexer;
 
 public abstract class HandlerThread extends Duplexer implements Runnable {
+    protected static final Logger LOGGER = 
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     protected HandlerThread(Socket socket) throws IOException {
         super(socket);
@@ -21,7 +24,7 @@ public abstract class HandlerThread extends Duplexer implements Runnable {
                 String response = handleMessage(request);
                 send(response);
             } catch (IOException ioe) {
-                log(Level.SEVERE, "Error communicatinig with client: "
+                LOGGER.log(Level.SEVERE, "Error communicatinig with client: "
                     + ioe.getMessage());
                 sentinel = false;
             }
