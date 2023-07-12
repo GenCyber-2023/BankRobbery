@@ -3,11 +3,17 @@ package bank.client;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.logging.Level;
 
+import bank.Bank;
 import bank.Duplexer;
 
 public class BankClient extends Duplexer implements Runnable {
     private static final String QUIT = "QUIT";
+
+    public BankClient(String host) throws IOException {
+        this(new Socket(host, Bank.BANK_PORT));
+    }
 
     public BankClient(Socket socket) throws IOException {
         super(socket);
@@ -32,8 +38,8 @@ public class BankClient extends Duplexer implements Runnable {
                     String response = read();
                     System.out.println(response);
                 } catch(IOException ioe) {
-                    System.err.println("Unexpected error: " + ioe.getMessage());
-                    System.err.println("The connection will be closed.");
+                    log(Level.SEVERE, "Unexpected error: " + ioe.getMessage() 
+                        + "The connection will be closed.");
                     sentinel = false;
                 }
             }
@@ -41,9 +47,19 @@ public class BankClient extends Duplexer implements Runnable {
 
         scanner.close();
         close();
+
+        log(Level.INFO, "Goodbye!");
     }
 
     public static void main(String[] args) {
-        
+        String host = args.length > 0 ? args[0] : "localhost";
+        try {
+            BankClient client = new BankClient(host);
+            Thread thread = new Thread(client);
+            thread.start();
+        } catch(IOException ioe) {
+            Bank.log(Level.SEVERE, "Could not establish a connection to " 
+                + host + ":" + Bank.BANK_PORT)   ;
+        }
     }
 }
