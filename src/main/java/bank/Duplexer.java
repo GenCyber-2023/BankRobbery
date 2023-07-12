@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 import java.net.Socket;
 
 public class Duplexer implements AutoCloseable {
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     private final Socket socket;
     private final PrintWriter writer;
     private final BufferedReader reader;
@@ -18,16 +21,20 @@ public class Duplexer implements AutoCloseable {
     }
 
     public void send(String message) {
-        writer.print(message);
+        LOGGER.info("SENDING: " + message);
+        writer.println(message);
         writer.flush();
     }
 
     public String read() throws IOException {
-        return reader.readLine();
+        String message = reader.readLine();
+        LOGGER.info("RECEIVED: " + message);
+        return message;
     }
 
     @Override
     public void close() {
+        LOGGER.info("CLOSING");
         try {
             socket.close();
             writer.close();

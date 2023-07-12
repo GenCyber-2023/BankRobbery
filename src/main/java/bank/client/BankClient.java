@@ -7,7 +7,6 @@ import java.util.Scanner;
 import bank.Duplexer;
 
 public class BankClient extends Duplexer implements Runnable {
-    private static final int PORT = 10240;
     private static final String QUIT = "QUIT";
 
     public BankClient(Socket socket) throws IOException {
