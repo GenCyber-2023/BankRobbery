@@ -1,4 +1,4 @@
-package bank.bankco.requests;
+package bank.bankco.server.requests;
 
 import bank.User;
 

@@ -1,4 +1,4 @@
-package bank.bankco;
+package bank.bankco.client;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -7,6 +7,7 @@ import java.util.Scanner;
 import static bank.CaesarCipher.encrypt;
 import static bank.CaesarCipher.decrypt;
 import bank.Duplexer;
+import bank.bankco.BankCo;
 
 /**
  * Command line interface that will transmit encrypted messages to a server.

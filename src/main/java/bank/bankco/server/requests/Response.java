@@ -1,4 +1,4 @@
-package bank.bankco.requests;
+package bank.bankco.server.requests;
 
 public class Response {
     private final String feedback;

@@ -1,4 +1,4 @@
-package bank.bankco;
+package bank.bankco.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bank.HandlerThread;
+import bank.bankco.BankCo;
 
 public class BankServer implements BankCo, Runnable {
     protected static final Logger LOGGER = 
