@@ -22,20 +22,18 @@ public class Duplexer implements AutoCloseable {
         writer.flush();
     }
 
-    public String read() {
-        String line;
-        try {
-            line = reader.readLine();
-        } catch (IOException e) {
-            line = null;
-        }
-        return line;
+    public String read() throws IOException {
+        return reader.readLine();
     }
 
     @Override
-    public void close() throws Exception {
-        socket.close();
-        writer.close();
-        reader.close();
+    public void close() {
+        try {
+            socket.close();
+            writer.close();
+            reader.close();
+        } catch(IOException ioe) {
+            // squash
+        }
     }
 }
