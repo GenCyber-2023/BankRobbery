@@ -1,4 +1,6 @@
-package bank;
+package bank.requests;
+
+import bank.User;
 
 /**
  * The interface for one of the commands that may be executed via the API.
