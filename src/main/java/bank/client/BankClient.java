@@ -47,8 +47,7 @@ public class BankClient extends Duplexer implements BankCo, Runnable {
                         BANK_SHIFT);
                     System.out.println(plaintext);
                 } catch(IOException ioe) {
-                    LOGGER.log(Level.SEVERE, "Unexpected error: " 
-                        + ioe.getMessage() 
+                    System.err.println("Unexpected error: " + ioe.getMessage() 
                         + "The connection will be closed.");
                     sentinel = false;
                 }
@@ -57,8 +56,6 @@ public class BankClient extends Duplexer implements BankCo, Runnable {
 
         scanner.close();
         close();
-
-        LOGGER.log(Level.INFO, "Goodbye!");
     }
 
     public static void main(String[] args) {
