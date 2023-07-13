@@ -12,6 +12,9 @@ import java.util.logging.Logger;
 import bank.Duplexer;
 import bank.MessageObserver;
 
+/**
+ * A server that 
+ */
 public class WireTigerServer implements Runnable, MessageObserver {
     private static final Logger LOGGER = 
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
