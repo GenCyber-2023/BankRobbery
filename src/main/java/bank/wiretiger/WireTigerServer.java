@@ -57,6 +57,11 @@ public class WireTigerServer implements Runnable, MessageObserver {
 
     public void close() {
         this.running = false;
+        try {
+            this.server.close();
+        } catch (IOException e) {
+            // squash
+        }
     }
 
     @Override
@@ -68,8 +73,10 @@ public class WireTigerServer implements Runnable, MessageObserver {
                 Socket socket = server.accept();
                 addClient(socket);
             } catch (IOException e) {
-                LOGGER.severe("Failed to accept a new client socket!");
-                running = false;
+                if(running) {
+                    LOGGER.severe("Failed to accept a new client socket!");
+                    running = false;
+                }
             }
         }
         LOGGER.info("WireTiger shutting down.");

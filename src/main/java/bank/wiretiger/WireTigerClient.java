@@ -40,5 +40,4 @@ public class WireTigerClient extends Duplexer implements Runnable {
         Thread thread = new Thread(client);
         thread.start();
     }
-    
 }
