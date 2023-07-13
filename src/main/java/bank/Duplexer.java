@@ -16,6 +16,7 @@ public class Duplexer implements AutoCloseable {
     private final BufferedReader reader;
     private final String string;
 
+    private MessageObserver observer;
 
     public Duplexer(Socket socket) throws IOException {
         this.socket = socket;
@@ -26,15 +27,25 @@ public class Duplexer implements AutoCloseable {
         this.string = "(" + socket.getLocalAddress() + ":" 
             + socket.getLocalPort() + ") <-> (" + socket.getInetAddress() 
             + ":" + socket.getPort() + ")";
+
+        this.observer = null;
+    }
+
+    public void setOnMessage(MessageObserver observer) {
+        this.observer = observer;
     }
 
     public void send(String message) {
         writer.println(message);
         writer.flush();
+        observer.messageSent(socket.getInetAddress(), socket.getPort(), 
+            message);
     }
 
     public String read() throws IOException {
         String message = reader.readLine();
+        observer.messageReceived(socket.getInetAddress(), socket.getPort(), 
+            message);
         return message;
     }
 
