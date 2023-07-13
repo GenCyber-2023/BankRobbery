@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -69,20 +66,5 @@ public class CsvUserDatabase extends UserDatabase {
 
             return users;
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        String filename = args.length > 0 ? args[0] : "data/users.csv";
-        String cs = args.length > 1 ? args[1] : "UTF-16";
-        int numberOfCustomers = args.length > 2 ? 
-            Integer.parseInt(args[2]) : 40;
-        
-        Random RNG = new Random();
-
-        Set<User> users = new HashSet<>();
-        while(users.size() < numberOfCustomers) {
-            // int accountNumber = 
-        }
-
     }
 }
