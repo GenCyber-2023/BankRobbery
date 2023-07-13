@@ -38,14 +38,22 @@ public class Duplexer implements AutoCloseable {
     public void send(String message) {
         writer.println(message);
         writer.flush();
-        observer.messageSent(socket.getInetAddress(), socket.getPort(), 
-            message);
+        if(observer != null) {
+            observer.messageSent(socket.getInetAddress(), socket.getPort(), 
+                message);
+        }
+    }
+
+    public boolean isOpen() {
+        return !socket.isClosed() && socket.isConnected();
     }
 
     public String read() throws IOException {
         String message = reader.readLine();
-        observer.messageReceived(socket.getInetAddress(), socket.getPort(), 
-            message);
+        if(observer != null) {
+            observer.messageReceived(socket.getInetAddress(), socket.getPort(), 
+                message);
+        }
         return message;
     }
 

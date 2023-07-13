@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -29,6 +30,29 @@ public class WireTigerServer implements Runnable, MessageObserver {
         this.server = server;
         this.clients = new HashSet<>();
         this.running = true;
+    }
+
+    public static void main(String[] args) throws IOException {
+        // FOR TESTING PURPOSES ONLY!!!
+        WireTigerServer wts = new WireTigerServer();
+        Thread thread = new Thread(wts);
+        thread.start();
+
+        boolean sentinel = true;
+        try(Scanner scanner = new Scanner(System.in)) {
+            while(sentinel) {
+                System.out.print(">> ");
+                String message = scanner.nextLine();
+                if(message.equalsIgnoreCase("quit")) {
+                    sentinel = false;
+                } else {
+                    wts.messageSent(wts.server.getInetAddress(), 
+                        WIRE_TIGER_PORT, message);
+                }
+            }
+        }
+        wts.close();
+        System.out.println("Goodbye!");
     }
 
     public void close() {
@@ -74,8 +98,16 @@ public class WireTigerServer implements Runnable, MessageObserver {
     }
 
     private void broadcastInfo(String message) {
+        Set<Duplexer> cleanUp = new HashSet<>();
         for(Duplexer client : clients) {
-            client.send(message);
+            if(client.isOpen()) {
+                client.send(message);
+            } else {
+                LOGGER.warning("Found a dead client (removing): " 
+                    + client);
+                cleanUp.add(client);
+            }
         }
+        clients.removeAll(cleanUp);
     }
 }
