@@ -1,6 +1,6 @@
 package bank.bankco.server.requests;
 
-import bank.User;
+import bank.bankco.server.User;
 
 /**
  * The interface for one of the commands that may be executed via the API.

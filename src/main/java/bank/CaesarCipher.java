@@ -41,7 +41,6 @@ public class CaesarCipher {
             char encrypted = encrypt(c, shift);
             builder.append(encrypted);
         }
-        System.out.println(builder.toString());
         return builder.toString();
     }
 
