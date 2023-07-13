@@ -10,7 +10,7 @@ import bank.HandlerThread;
 import bank.bankco.BankCo;
 
 public class BankServer implements BankCo, Runnable {
-    protected static final Logger LOGGER = 
+    private static final Logger LOGGER = 
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     
     private final ServerSocket server;
