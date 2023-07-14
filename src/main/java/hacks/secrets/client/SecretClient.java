@@ -24,7 +24,7 @@ public class SecretClient extends Duplexer implements Secrets, Runnable {
             setSecret();
             boolean sentinel = true;
             while(sentinel) {
-                System.out.println(">> ");
+                System.out.print(">> ");
                 String command = scanner.nextLine();
                 String[] tokens = command.split(" ", 2);
                 switch(tokens[0]) {
@@ -136,14 +136,10 @@ public class SecretClient extends Duplexer implements Secrets, Runnable {
 
     public static void main(String[] args) throws Exception {
         String host = args.length > 0 ? args[0] : "localhost";
-        try(Socket socket = new Socket(host, SECRET_PORT)) {
-            SecretClient client = new SecretClient(socket);
-            Thread thread = new Thread(client);
-            thread.start();
-        } catch(IOException ioe) {
-            System.err.println("Error connecting to server: "
-                + ioe.getMessage());
-        }
+        Socket socket = new Socket(host, SECRET_PORT);
+        SecretClient client = new SecretClient(socket);
+        Thread thread = new Thread(client);
+        thread.start();
     }
     
 }
