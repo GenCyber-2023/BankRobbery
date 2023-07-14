@@ -111,6 +111,7 @@ public class SecretClient extends Duplexer implements Secrets, Runnable {
             try {
                 System.out.print("Enter valid shift between 1-255: ");
                 int shift = scanner.nextInt();
+                scanner.nextLine(); // clear out the buffer
                 if(shift > 0 && shift < 256) {
                     return shift;
                 }
