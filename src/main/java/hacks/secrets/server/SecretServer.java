@@ -38,9 +38,11 @@ public class SecretServer extends Messenger implements Secrets, Runnable {
                 Thread thread = new Thread(handler);
                 thread.start();
             } catch(IOException ioe) {
-
+                LOGGER.warning("Failed to accept a new client!");
+                break;
             }
         }
+        LOGGER.info("Server is shutting down.");
     }
     
 }
