@@ -66,9 +66,6 @@ public class BankClientHandler extends HandlerThread implements BankCo {
         log("RESPONSE: " + response);
         String ciphertext = encrypt(response, BANK_SHIFT);
 
-        String reversed = decrypt(ciphertext, BANK_SHIFT);
-        log("DECRYPTED RESPONSE: " + reversed);
-
         return ciphertext;
     }
 

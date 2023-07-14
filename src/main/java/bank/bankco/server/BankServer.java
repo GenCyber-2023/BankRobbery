@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bank.HandlerThread;
+import bank.MessageObserver;
 import bank.bankco.BankCo;
 
 public class BankServer implements BankCo, Runnable {
@@ -14,6 +15,7 @@ public class BankServer implements BankCo, Runnable {
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     
     private final ServerSocket server;
+    private MessageObserver observer;
 
     public BankServer() throws IOException {
         this(new ServerSocket(BANK_PORT));
@@ -21,6 +23,10 @@ public class BankServer implements BankCo, Runnable {
 
     public BankServer(ServerSocket server) {
         this.server = server;
+    }
+
+    public void setOnMessage(MessageObserver observer) {
+        this.observer = observer;
     }
 
     @Override
@@ -32,6 +38,7 @@ public class BankServer implements BankCo, Runnable {
                 LOGGER.log(Level.INFO, "Client connected; spinning up handler: " 
                     + client.getInetAddress());
                 HandlerThread handler = new BankClientHandler(client);
+                handler.setOnMessage(observer);
                 Thread thread = new Thread(handler);
                 thread.start();
             } catch (IOException e) {
