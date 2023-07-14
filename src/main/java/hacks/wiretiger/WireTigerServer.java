@@ -134,9 +134,8 @@ public class WireTigerServer implements Runnable, MessageObserver {
     private void broadcastInfo(String message) {
         Set<Duplexer> cleanUp = new HashSet<>();
         for(Duplexer client : clients) {
-            if(client.isOpen()) {
-                client.send(message);
-            } else {
+            client.send(message);
+            if(!client.isOpen()) {
                 LOGGER.warning("Found a dead client (removing): " 
                     + client);
                 cleanUp.add(client);
