@@ -45,11 +45,7 @@ public class Duplexer implements AutoCloseable {
     }
 
     public boolean isOpen() {
-        boolean isOpen = socket.isConnected() || !socket.isClosed();
-        if(isOpen) {
-            System.out.println("Socket is closed!!!!!");
-        }
-        return isOpen;
+        return !writer.checkError();
     }
 
     public String read() throws IOException {
