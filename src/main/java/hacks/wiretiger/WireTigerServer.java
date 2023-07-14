@@ -119,6 +119,7 @@ public class WireTigerServer implements Runnable, MessageObserver {
         try {
             Duplexer duplexer = new Duplexer(socket);
             clients.add(duplexer);
+            LOGGER.info("A new client has connected: " + duplexer);
         } catch (IOException e) {
             LOGGER.warning("Failed to establish connection to client: " 
                 + socket);
