@@ -24,7 +24,22 @@ public class SecretClient extends Duplexer implements Secrets, Runnable {
             setSecret();
             boolean sentinel = true;
             while(sentinel) {
-
+                System.out.println(">> ");
+                String command = scanner.nextLine();
+                String[] tokens = command.split(" ", 2);
+                switch(tokens[0]) {
+                    case "guess":
+                        guess(tokens[1]);
+                        break;
+                    case "decrypt":
+                        tryDecrypt(tokens[1]);
+                        break;
+                    case "help":
+                        help();
+                        break;
+                    default:
+                        System.err.println("IDK what that means. Try 'help'");
+                }
             }
         } catch(IOException ioe) {
             System.err.println("Error communicating with server: " 
@@ -41,6 +56,41 @@ public class SecretClient extends Duplexer implements Secrets, Runnable {
     @Override
     public String read() throws IOException {
         return decrypt(super.read(), SECRET_SHIFT);
+    }
+
+    private void guess(String command) throws IOException {
+        try {
+            String[] tokens = command.split(" ", 3);
+            String host = tokens[0];
+            int shift = Integer.parseInt(tokens[1]);
+            String secret = tokens[2];
+            send(GUESS_SECRET + " " + host + " " + shift + " " + secret);
+            String response = read();
+            System.out.println(response);
+        } catch(IOException ioe) {
+            throw ioe;
+        } catch(Exception e) {
+            System.err.println("Try again: guess <host> <shift> <secret>");
+        }
+
+    }
+
+    private void tryDecrypt(String command) {
+        try {
+            String[] tokens = command.split(" ", 2);
+            int shift = Integer.parseInt(tokens[0]);
+            String ciphertext = tokens[1];
+            String plaintext = decrypt(ciphertext, shift);
+            System.out.println("Plaintext: " + plaintext);
+        } catch(Exception e) {
+            System.err.println("Try again: decrypt <shift> <ciphertext>");
+        }
+    }
+
+    private void help() {
+        System.out.println("Enter one of the following commands: ");
+        System.out.println("guess <hostname or IP> <shift> <secret>");
+        System.out.println("decrypt <shift> <ciphertext>");
     }
 
     private void setSecret() throws IOException {
