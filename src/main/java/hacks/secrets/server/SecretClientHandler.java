@@ -2,17 +2,30 @@ package hacks.secrets.server;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import static hacks.CaesarCipher.decrypt;
+import static hacks.CaesarCipher.encrypt;
 import hacks.HandlerThread;
 import hacks.secrets.Secrets;
 
 public class SecretClientHandler extends HandlerThread implements Secrets {
+    /**
+     * Used to log messages.
+     */
+    private static final Logger LOGGER = 
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     protected SecretClientHandler(Socket socket) throws IOException {
         super(socket);
+        log("Created for " + getRemoteAddress());
     }
 
     @Override
-    public String handleMessage(String message) {
+    public String handleMessage(String ciphertext) {
+        String message = decrypt(ciphertext, SECRET_SHIFT);
+        log("Handling message: " + message);
         String response;        
         try {
             String command = getFirstWord(message);
@@ -29,10 +42,11 @@ public class SecretClientHandler extends HandlerThread implements Secrets {
                     break;
             }
         } catch(Exception exception) {
+            log(Level.WARNING, exception.getMessage());
             response = invalidRequest(message);
         }
-
-        return response;
+        log("Returning response: " + response);
+        return encrypt(response, SECRET_SHIFT);
     }
     
     private String tryToSetSecret(String secret) {
@@ -51,6 +65,14 @@ public class SecretClientHandler extends HandlerThread implements Secrets {
 
     private String invalidRequest(String message) {
         return INVALID_REQUEST + " " + message;
+    }
+
+    private void log(String message) {
+        log(Level.INFO, message);
+    }
+
+    private void log(Level level, String message) {
+        LOGGER.log(level, getRemoteAddress() + ": " + message);
     }
 
     private static String getFirstWord(String string) {

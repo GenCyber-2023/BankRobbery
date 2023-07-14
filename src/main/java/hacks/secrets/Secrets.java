@@ -10,6 +10,8 @@ import hacks.CaesarCipher;
 public interface Secrets {
     public static final int SECRET_PORT = 13241;
 
+    public static final int SECRET_SHIFT = 11;
+
     public static final String SET_SECRET = "SET_SECRET";
     public static final String SECRET_SET = "SECRET_SET";
     public static final String SECRET_ALREADY_SET = "SECRET_ALREADY_SET";
