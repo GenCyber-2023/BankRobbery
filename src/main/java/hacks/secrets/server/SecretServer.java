@@ -1,0 +1,47 @@
+package hacks.secrets.server;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import hacks.HandlerThread;
+import hacks.Messenger;
+
+public class SecretServer extends Messenger implements Runnable {
+    public static final int SECRET_PORT = 13241;
+
+    private static final Logger LOGGER = 
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    
+    private final ServerSocket server;
+
+    public SecretServer() throws IOException {
+        this(new ServerSocket(SECRET_PORT));
+    }
+
+    public SecretServer(ServerSocket server) {
+        this.server = server;
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            try {
+                LOGGER.log(Level.INFO, "Waiting for next client...");
+                Socket client = server.accept();
+                LOGGER.log(Level.INFO, "Client connected; spinning up handler: " 
+                    + client.getInetAddress());
+                HandlerThread handler = new SecretClientHandler(client);
+                handler.setOnMessage(getObserver());
+                Thread thread = new Thread(handler);
+                thread.start();
+            } catch(IOException ioe) {
+
+            }
+        }
+    }
+    
+}

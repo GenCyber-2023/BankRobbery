@@ -29,6 +29,10 @@ public class Messenger {
         this.observer = observer;
     }
 
+    protected MessageObserver getObserver() {
+        return this.observer;
+    }
+
     /**
      * Used to notify the registered observer that the messenger has been used 
      * to send a message.
