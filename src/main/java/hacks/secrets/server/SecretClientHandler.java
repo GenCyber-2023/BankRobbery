@@ -28,14 +28,13 @@ public class SecretClientHandler extends HandlerThread implements Secrets {
         log("Handling message: " + message);
         String response;        
         try {
-            String command = getFirstWord(message);
-            String rest = substringAfterFirstSpace(message);
-            switch(command) {
+            String[] tokens = message.split(" ", 2);
+            switch(tokens[0]) {
                 case SET_SECRET:
-                    response = tryToSetSecret(rest);
+                    response = tryToSetSecret(tokens[1]);
                     break;
                 case GUESS_SECRET:
-                    response = guessSecret(rest);
+                    response = guessSecret(tokens[1]);
                     break;
                 default:
                     response = invalidRequest(message);
@@ -54,11 +53,12 @@ public class SecretClientHandler extends HandlerThread implements Secrets {
             SECRET_SET : SECRET_ALREADY_SET;
     }
 
-    private String guessSecret(String guess) throws Exception {
-        int shift = Integer.parseInt(getFirstWord(guess));
-        guess = substringAfterFirstSpace(guess);
-        String host = getFirstWord(guess);
-        guess = substringAfterFirstSpace(guess);
+    private String guessSecret(String request) throws Exception {
+        String[] tokens = request.split(" ", 3);
+        String host = tokens[0];
+        int shift = Integer.parseInt(tokens[1]);
+        String guess = tokens[2];
+
         return Secrets.guessSecret(host, shift, guess) ?
             GUESS_WAS_CORRECT : GUESS_WAS_INCORRECT;   
     }
@@ -73,19 +73,5 @@ public class SecretClientHandler extends HandlerThread implements Secrets {
 
     private void log(Level level, String message) {
         LOGGER.log(level, getRemoteAddress() + ": " + message);
-    }
-
-    private static String getFirstWord(String string) {
-        int indexOfFirstSpace = string.indexOf(' ');
-        return string.substring(0, indexOfFirstSpace);
-    }
-
-    private static String substringAfterFirstSpace(String string) {
-        String split = null;
-        int indexOfFirstSpace = string.indexOf(' ');
-        if(indexOfFirstSpace > -1) {
-            split = string.substring(indexOfFirstSpace + 1);
-        }
-        return split;
     }
 }
