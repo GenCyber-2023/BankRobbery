@@ -13,8 +13,18 @@ import bank.bankco.BankCo;
  * Command line interface that will transmit encrypted messages to a server.
  */
 public class BankClient extends Duplexer implements BankCo, Runnable {
+    /**
+     * The command that quits the client.
+     */
     private static final String QUIT = "QUIT";
 
+    /**
+     * Creates a new client that communicates with the specified host on the
+     * standard port.
+     * 
+     * @param host The hostname of the bank server.
+     * @throws IOException
+     */
     public BankClient(String host) throws IOException {
         this(new Socket(host, BANK_PORT));
     }
