@@ -1,4 +1,6 @@
-package bank.bankco.server.util;
+package hacks.bankco.server.util;
+
+import static hacks.CaesarCipher.encrypt;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -6,10 +8,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import static bank.CaesarCipher.encrypt;
-
-import bank.bankco.server.CsvUserDatabase;
-import bank.bankco.server.User;
+import hacks.bankco.server.CsvUserDatabase;
+import hacks.bankco.server.User;
 
 public class RandomUserMaker {
     private static final Random RNG = new Random();

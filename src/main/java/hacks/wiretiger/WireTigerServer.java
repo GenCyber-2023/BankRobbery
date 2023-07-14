@@ -1,4 +1,4 @@
-package bank.wiretiger;
+package hacks.wiretiger;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -9,8 +9,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import bank.Duplexer;
-import bank.MessageObserver;
+import hacks.Duplexer;
+import hacks.MessageObserver;
 
 /**
  * A server that 

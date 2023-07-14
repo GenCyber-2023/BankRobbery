@@ -1,9 +1,9 @@
-package bank;
+package hacks.bankco;
 
 import java.io.IOException;
 
-import bank.bankco.server.BankServer;
-import bank.wiretiger.WireTigerServer;
+import hacks.bankco.server.BankServer;
+import hacks.wiretiger.WireTigerServer;
 
 public class Main {
     public static void main(String[] args) throws IOException {

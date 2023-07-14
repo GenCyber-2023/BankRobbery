@@ -1,4 +1,4 @@
-package bank.bankco.server.requests;
+package hacks.bankco.server.requests;
 
 public class Response {
     private final String feedback;

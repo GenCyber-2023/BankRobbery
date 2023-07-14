@@ -1,4 +1,4 @@
-package bank;
+package hacks;
 
 import java.util.Scanner;
 

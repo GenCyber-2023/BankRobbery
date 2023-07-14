@@ -1,13 +1,14 @@
-package bank.bankco.client;
+package hacks.bankco.client;
+
+import static hacks.CaesarCipher.decrypt;
+import static hacks.CaesarCipher.encrypt;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-import static bank.CaesarCipher.encrypt;
-import static bank.CaesarCipher.decrypt;
-import bank.Duplexer;
-import bank.bankco.BankCo;
+import hacks.Duplexer;
+import hacks.bankco.BankCo;
 
 /**
  * Command line interface that will transmit encrypted messages to a server.

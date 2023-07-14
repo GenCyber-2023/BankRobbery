@@ -1,4 +1,4 @@
-package bank.bankco.server;
+package hacks.bankco.server;
 
 import java.io.File;
 import java.io.FileWriter;

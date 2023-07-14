@@ -1,8 +1,8 @@
-package bank.bankco.server;
+package hacks.bankco.server;
 
-import static bank.CaesarCipher.encrypt;
+import static hacks.CaesarCipher.encrypt;
 
-import bank.bankco.BankCo;
+import hacks.bankco.BankCo;
 
 /**
  * Represents a bank user.

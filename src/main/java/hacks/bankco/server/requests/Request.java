@@ -1,6 +1,6 @@
-package bank.bankco.server.requests;
+package hacks.bankco.server.requests;
 
-import bank.bankco.server.User;
+import hacks.bankco.server.User;
 
 /**
  * The interface for one of the commands that may be executed via the API.

@@ -1,10 +1,10 @@
-package bank.wiretiger;
+package hacks.wiretiger;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import bank.Duplexer;
+import hacks.Duplexer;
 
 public class WireTigerClient extends Duplexer implements Runnable {
     private static final Logger LOGGER = 
