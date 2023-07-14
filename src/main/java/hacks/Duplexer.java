@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.Charset;
 
@@ -114,5 +115,14 @@ public class Duplexer extends Messenger implements AutoCloseable {
     @Override
     public String toString() {
         return stringRepresentation;
+    }
+
+    /**
+     * Returns the address at the other end of the socket.
+     * 
+     * @return The address at the other end of the socket.
+     */
+    public InetAddress getRemoteAddress() {
+        return socket.getInetAddress();
     }
 }

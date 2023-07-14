@@ -8,10 +8,9 @@ import java.util.logging.Logger;
 
 import hacks.HandlerThread;
 import hacks.Messenger;
+import hacks.secrets.Secrets;
 
-public class SecretServer extends Messenger implements Runnable {
-    public static final int SECRET_PORT = 13241;
-
+public class SecretServer extends Messenger implements Secrets, Runnable {
     private static final Logger LOGGER = 
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
