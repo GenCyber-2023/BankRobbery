@@ -1,4 +1,4 @@
-package bank.bankco;
+package bank;
 
 import java.io.IOException;
 
